@@ -1,0 +1,22 @@
+{
+  "name": "signal-remote-trigger",
+  "version": "1.0.0",
+  "description": "Remote Signal message triggering system",
+  "scripts": {
+    "build-server": "tsc signal_server.ts --esModuleInterop",
+    "build-client": "tsc signal_client.ts --esModuleInterop",
+    "start-server": "node signal_server.js",
+    "trigger": "node signal_client.js",
+    "update-packages": "ncu -u"
+  },
+  "dependencies": {
+    "axios": "^1.8.4",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.1",
+    "@types/node": "^22.13.14",
+    "typescript": "^5.8.2",
+    "npm-check-updates": "^17.1.16"
+  }
+}
