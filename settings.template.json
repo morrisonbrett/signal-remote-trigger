@@ -1,0 +1,13 @@
+{
+  "server": {
+    "port": 8080,
+    "signalExePath": "C:/Your/Path/To/SignalSend.exe",
+    "allowedIps": ["IP-of-your-client-machine"]
+  },
+  "client": {
+    "serverIp": "IP-of-your-server-machine",
+    "port": 8080,
+    "defaultRecipient": "Your Contact Name",
+    "defaultMessage": "Your default message"
+  }
+}

@@ -7,7 +7,7 @@ SetWorkingDir %A_ScriptDir%
 ContactName := "Note to Self"
 BusyMessage := "Busy, can't talk right now"
 SignalExeName := "Signal Beta.exe"  ; Adjust if needed
-SignalExePath := "C:\Users\b\AppData\Local\Programs\signal-desktop-beta\Signal Beta.exe"
+SignalExePath := "C:\Users\%A_UserName%\AppData\Local\Programs\signal-desktop-beta\Signal Beta.exe"
 
 ; Get parameters from command line using proper command line parsing
 if (A_Args.Length() >= 1) {

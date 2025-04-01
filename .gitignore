@@ -4,3 +4,4 @@ signal_client.js
 signal_server.js
 dist
 sima_busy.bat
+settings.json

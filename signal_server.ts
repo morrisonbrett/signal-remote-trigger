@@ -2,13 +2,7 @@
 import express, { Request, Response, NextFunction } from 'express';
 import { exec } from 'child_process';
 import * as fs from 'fs';
-
-// Configuration
-const config: ServerConfig = {
-  port: 8888,
-  signalExePath: 'SignalSend.exe',
-  allowedIps: ['192.168.100.2']
-};
+import * as path from 'path';
 
 // Type definitions
 interface MessageRequest {
@@ -67,6 +61,24 @@ app.post('/send-message', (req: Request, res: Response) => {
   sendSignalMessage(res, recipient, message);
 });
 
+// Load settings from file
+function loadSettings(): ServerConfig {
+  try {
+    const settingsPath = path.join(__dirname, 'settings.json');
+    const settingsData = fs.readFileSync(settingsPath, 'utf8');
+    const settings = JSON.parse(settingsData);
+    return settings.server;
+  } catch (error) {
+    console.error('Error loading server settings:', error);
+    // Return default settings if file not found or invalid
+    return {
+      port: 8080,
+      signalExePath: 'SignalSend.exe',
+      allowedIps: ['127.0.0.1']
+    };
+  }
+}
+
 // Function to run the AHK executable with parameters
 function sendSignalMessage(res: Response, recipient: string, message: string): void {
   // Verify the EXE exists
@@ -104,6 +116,8 @@ function sendSignalMessage(res: Response, recipient: string, message: string): v
     res.send('Message sending initiated');
   });
 }
+
+const config: ServerConfig = loadSettings();
 
 // Start the server
 const server = app.listen(config.port, () => {

@@ -1,13 +1,7 @@
 // signal_client.ts - Fixed TypeScript client with properly working command line arguments
 import axios, { AxiosError, AxiosResponse } from 'axios';
-
-// Default configuration
-const config: ClientConfig = {
-  serverIp: '192.168.100.3',
-  port: 8888,
-  defaultRecipient: 'Note to Self',
-  defaultMessage: 'Busy, can\'t talk right now'
-};
+import * as fs from 'fs';
+import * as path from 'path';
 
 // Type definitions
 interface ClientConfig {
@@ -56,6 +50,27 @@ Examples:
   node signal_client.js -r "Wife" -m "Running late, be home soon"
   `);
 }
+
+// Load settings from file
+function loadSettings(): ClientConfig {
+  try {
+    const settingsPath = path.join(__dirname, 'settings.json');
+    const settingsData = fs.readFileSync(settingsPath, 'utf8');
+    const settings = JSON.parse(settingsData);
+    return settings.client;
+  } catch (error) {
+    console.error('Error loading client settings:', error);
+    // Return default settings if file not found or invalid
+    return {
+      serverIp: '127.0.0.1',
+      port: 8080,
+      defaultRecipient: 'Note to Self',
+      defaultMessage: 'Busy, can\'t talk right now'
+    };
+  }
+}
+
+const config: ClientConfig = loadSettings();
 
 // Parse command-line arguments
 function parseArgs(): CommandLineArgs {
